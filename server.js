@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const port = process.env.Port || 3000;
+const moviesRouter = require('./routers/movies');
 
 //middlewares
 const errorHandler = require('./middlewares/errorsHandler')
@@ -13,6 +14,9 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.send('Entry point')
 })
+
+//router
+app.use('/api/books', moviesRouter);
 
 app.use(errorHandler);
 app.use(notFound);
