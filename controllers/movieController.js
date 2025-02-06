@@ -1,3 +1,6 @@
+//database import
+const connection = require('../data/db');
+
 //index root
 const index = (req, res) => {
     res.sen('Movie list');
