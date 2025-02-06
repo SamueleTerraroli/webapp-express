@@ -10,7 +10,8 @@ const index = (req, res) => {
 
         const moviesWithImages = results.map(movie => ({
             ...movie,
-            image_url: movie.image ? `/${movie.image}` : null
+            image_url: movie.image ? `${req.protocol}://${req.get('host')}/images/movies_cover${movie.image}` : null
+
         }));
 
         res.json(moviesWithImages);
@@ -43,7 +44,8 @@ const show = (req, res) => {
 
         const movie = {
             ...results[0],
-            image_url: results[0].image ? `/${results[0].image}` : null
+            image_url: results[0].image ? `${req.protocol}://${req.get('host')}/images/movies_cover${results[0].image}` : null
+
         };
 
         // reviews query

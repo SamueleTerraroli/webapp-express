@@ -3,6 +3,11 @@ const app = express();
 require('dotenv').config();
 const port = process.env.Port || 3000;
 const moviesRouter = require('./routers/movies');
+const path = require('path');
+
+// Servire i file statici dalla cartella 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/movies', require('./routers/movies'))
 
 //middlewares
 const errorHandler = require('./middlewares/errorsHandler')
