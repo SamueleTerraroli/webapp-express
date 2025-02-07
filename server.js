@@ -4,6 +4,9 @@ require('dotenv').config();
 const port = process.env.Port || 3000;
 const moviesRouter = require('./routers/movies');
 const path = require('path');
+const cors = require('cors');
+
+app.use(cors({ origin: 'http://localhost:5173' }))
 
 // Servire i file statici dalla cartella 'public'
 app.use(express.static(path.join(__dirname, 'public')));
