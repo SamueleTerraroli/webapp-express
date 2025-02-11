@@ -7,4 +7,7 @@ const movieController = require('../controllers/movieController');
 router.get('/', movieController.index);
 router.get('/:id', movieController.show);
 
+//Aggiungo una nuova recensione
+router.post('/:id/reviews', movieController.storeReview);
+
 module.exports = router;
