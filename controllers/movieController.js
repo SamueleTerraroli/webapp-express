@@ -13,7 +13,7 @@ const index = (req, res) => {
 
         const moviesWithImages = results.map(movie => ({
             ...movie,
-            image_url: movie.image ? `${req.protocol}://${req.get('host')}/images/movies_cover${movie.image}` : null
+            image_url: movie.image ? `${req.protocol}://${req.get('host')}/images/movies_cover/${movie.image}` : null
 
         }));
 
@@ -47,7 +47,7 @@ const show = (req, res) => {
 
         const movie = {
             ...results[0],
-            image_url: results[0].image ? `${req.protocol}://${req.get('host')}/images/movies_cover${results[0].image}` : null
+            image_url: results[0].image ? `${req.protocol}://${req.get('host')}/images/movies_cover/${results[0].image}` : null
 
         };
 
@@ -80,9 +80,26 @@ const storeReview = (req, res) => {
 
 }
 
+const store = (req, res) => {
+    console.log(req.file); // Log file information
+    const { title, director, abstract } = req.body;
+    const imageName = req.file.filename;
+
+    const sql = "INSERT INTO movies (title, director, abstract, image) VALUES (?, ?, ?, ?)";
+    connection.query(sql, [title, director, abstract, imageName], (err, results) => {
+        if (err) {
+            console.error('Database query error: ', err); // Log the error
+            return res.status(500).json({ error: 'Query error on database' });
+        }
+        res.status(201).json({ status: 'success', message: 'Film aggiunto con successo' });
+    });
+};
+
+
 
 module.exports = {
     index,
     show,
-    storeReview
+    storeReview,
+    store
 }
